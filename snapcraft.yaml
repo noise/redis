@@ -1,0 +1,34 @@
+name: redis-noise
+version: "3.2.3"
+summary: Redis server
+description: Redis is an open source (BSD licensed),
+  in-memory data structure store, used as database,
+  cache and message broker.
+confinement: strict
+grade: stable
+
+apps:
+  redis-server:
+    command: redis-server
+    daemon: simple
+    plugs: [network, network-bind]
+  redis-benchmark:
+    command: redis-benchmark
+    plugs: [network]
+  redis-check-aof:
+    command: redis-check-aof
+  redis-check-rdb:
+    command: redis-check-rdb
+  redis-cli:
+    command: redis-cli
+    plugs: [network]
+  redis-sentinel:
+    command: redis-sentinel
+    plugs: [network, network-bind]
+
+parts:
+  redis:
+    plugin: make
+    source: https://github.com/antirez/redis.git
+    source-tag: 3.2.3
+    make-install-var: PREFIX
